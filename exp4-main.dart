@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:checkbox_formfield/checkbox_formfield.dart';
 
 void main() => runApp(MyApp());
 
@@ -74,6 +75,29 @@ class MyFormState extends State<MyForm>{
             return null;
           },
         ),
+        CheckboxListTileFormField(
+          title: Text('Agree to terms and condtions !'),
+          onSaved: (bool? value) {
+            print(value);
+          },
+          validator: (bool? value) {
+            if (value!) {
+              return null;
+            } else {
+              return 'This is required';
+            }
+          },
+          onChanged: (value) {
+            if (value) {
+              print("ListTile Checked :)");
+            } else {
+              print("ListTile Not Checked :(");
+            }
+          },
+          autovalidateMode: AutovalidateMode.always,
+          contentPadding: EdgeInsets.all(1),
+        ),
+
         new Container(
           padding: EdgeInsets.only(left: 150, top: 40),
           child: new RaisedButton(

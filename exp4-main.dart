@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:checkbox_formfield/checkbox_formfield.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,6 +32,7 @@ class MyForm extends StatefulWidget {
 
 class MyFormState extends State<MyForm>{
   final _formKey = GlobalKey<FormState>();
+  var genderOptions = ['Male', 'Female', 'Others'];
   @override
   Widget build(BuildContext context) {
   return Form(
@@ -75,6 +79,43 @@ class MyFormState extends State<MyForm>{
             return null;
           },
         ),
+        FormBuilderDropdown(
+          name: 'Gender',
+          decoration: const InputDecoration(
+            labelText: 'Gender',
+              ),
+          allowClear: true,
+          hint: const Text("Select Gender"),
+          validator: FormBuilderValidators.compose(
+                  [
+                    FormBuilderValidators.required(context, errorText: "Select your gender")
+
+                  ]),
+              items: genderOptions
+                  .map((gender) => DropdownMenuItem(
+                        value: gender,
+                        child: Text('$gender'),
+                      ))
+                  .toList(),
+            ),
+          
+      
+        FormBuilderChoiceChip(
+          name: 'choice',
+          validator: FormBuilderValidators.compose([
+               FormBuilderValidators.required(context , errorText: "Select your branch"),
+             ]), 
+          decoration:const InputDecoration(
+            labelText: "Select your branch",
+          ),
+          options: [
+            FormBuilderFieldOption(value: "CE", child: Text('CE')),
+            FormBuilderFieldOption(value: "IT", child: Text('IT')),
+            FormBuilderFieldOption(value: "EXTC", child: Text('EXTC')),
+            FormBuilderFieldOption(value: "MECH", child: Text('MECH')),
+          ],
+        ),
+
         CheckboxListTileFormField(
           title: Text('Agree to terms and condtions !'),
           onSaved: (bool? value) {
@@ -98,8 +139,22 @@ class MyFormState extends State<MyForm>{
           contentPadding: EdgeInsets.all(1),
         ),
 
+          new Container(
+           padding: EdgeInsets.only(top: 20),
+         child: new RaisedButton(
+              
+              color: Theme.of(context).colorScheme.secondary,
+              child: Text(
+                "Reset",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                _formKey.currentState!.reset();
+              },
+            ),
+    ),
         new Container(
-          padding: EdgeInsets.only(left: 150, top: 40),
+          padding: EdgeInsets.only(top: 40),
           child: new RaisedButton(
             child: Text('Submit'),
             onPressed: (){
@@ -109,9 +164,15 @@ class MyFormState extends State<MyForm>{
               }
             },
           )
-        )
+          
+          ) ,
+
+  
       ],
+      
     ),
+
+    
   );
   }
 }

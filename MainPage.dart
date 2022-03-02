@@ -11,15 +11,18 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Inbox Here'),
       ),
-      body: Center(
+      body: Container(
+        padding: EdgeInsets.all(50),
         child: GestureDetector(
           onLongPress: () {
             Navigator.pop(context);
+            print("You long pressed the button");
           },
+
           child: RaisedButton(
-            color: Colors.blue,
+            color: Colors.orange,
             onPressed: () {},
-            child: const Text('Back'),
+            child: const Text('Long press here to go Back!!'),
           ),
         ),
       ),
